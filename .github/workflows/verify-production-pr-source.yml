@@ -19,13 +19,16 @@ jobs:
     name: Verify source branch
     runs-on: ubuntu-latest
     env:
-      EXPECTED_SOURCE_BRANCH: main
       PULL_REQUEST_SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
     steps:
       - name: Reject an unexpected source branch
         shell: bash
         run: |
-          if [[ "$PULL_REQUEST_SOURCE_BRANCH" != "$EXPECTED_SOURCE_BRANCH" ]]; then
-            echo "::error::Pull requests to production must originate from $EXPECTED_SOURCE_BRANCH; received $PULL_REQUEST_SOURCE_BRANCH."
-            exit 1
-          fi
+          case "$PULL_REQUEST_SOURCE_BRANCH" in
+            main|master)
+              ;;
+            *)
+              echo "::error::Pull requests to production must originate from main or master; received $PULL_REQUEST_SOURCE_BRANCH."
+              exit 1
+              ;;
+          esac
