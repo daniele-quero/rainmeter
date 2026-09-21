@@ -1,0 +1,31 @@
+name: Verify production pull request source
+
+on:
+  pull_request_target:
+    branches:
+      - production
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  verify-source-branch:
+    name: Verify source branch
+    runs-on: ubuntu-latest
+    env:
+      EXPECTED_SOURCE_BRANCH: main
+      PULL_REQUEST_SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
+    steps:
+      - name: Reject an unexpected source branch
+        shell: bash
+        run: |
+          if [[ "$PULL_REQUEST_SOURCE_BRANCH" != "$EXPECTED_SOURCE_BRANCH" ]]; then
+            echo "::error::Pull requests to production must originate from $EXPECTED_SOURCE_BRANCH; received $PULL_REQUEST_SOURCE_BRANCH."
+            exit 1
+          fi
