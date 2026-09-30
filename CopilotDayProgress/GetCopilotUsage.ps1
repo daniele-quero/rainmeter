@@ -42,4 +42,4 @@ if ($requestError) {
 }
 
 
-Write-Host $usagePercent.ToString([System.Globalization.CultureInfo]::InvariantCulture) -NoNewline
+Write-Host " "$usagePercent.ToString([System.Globalization.CultureInfo]::InvariantCulture) -NoNewline
