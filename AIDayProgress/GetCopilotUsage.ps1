@@ -56,7 +56,7 @@ try {
     $headers = @{
         Authorization = "Bearer $token"
         Accept = 'application/vnd.github+json'
-        'User-Agent' = 'Rainmeter-CopilotDayProgress'
+        'User-Agent' = 'Rainmeter-AIDayProgress'
     }
 
     $api = Invoke-RestMethod -Uri 'https://api.github.com/copilot_internal/user' -Headers $headers

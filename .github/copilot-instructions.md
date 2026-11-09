@@ -27,5 +27,5 @@ command output, startup actions, and account-safe `gh` authentication.
 - Prefer reusing `MeterStyle` and `Measure` definitions instead of copying repeated options across meters.
 - When working in `illustro`, use Rainmeter-native paths and variable syntax rather than Windows filesystem paths.
 - Preserve the existing metadata conventions (`[Metadata]`, `Name`, `Author`, `Information`, `Version`) when editing skins.
-- For the Copilot usage widget, keep the script and Rainmeter measure names aligned with the existing `MeasureCopilotUsage` / `MeasureDayProgress` patterns.
+- For the `AIDayProgress` usage widget, keep the scripts and Rainmeter measure names aligned with the existing `MeasureCopilotUsage` / `MeasureClaudeUsage` / `MeasureDayProgress` patterns.
 - Avoid adding build tooling or package metadata unless the repository already includes one; this project is intentionally lightweight and editor-driven.
