@@ -49,10 +49,22 @@ Claude CLI (`~\.claude\.credentials.json`, or `CLAUDE_CONFIG_DIR`) and calls the
 undocumented `https://api.anthropic.com/api/oauth/usage` endpoint, which may
 change without notice. It returns `extra_usage.utilization`, rounded to two
 decimals (used spend / monthly limit). If the account has no extra usage, it
-falls back to `five_hour.utilization`. The token is never printed or saved.
+falls back to `five_hour.utilization`. Tokens are never printed.
 
-If the access token has expired, the script runs `claude auth status` once to
-let the CLI renew it. If the token is still expired, run `claude auth login`.
+If the access token has expired or expires within 30 seconds, the script
+renews it using the CLI's OAuth client and refresh token at
+`https://platform.claude.com/v1/oauth/token`. This endpoint is also undocumented.
+Unlike `claude auth status`, this performs a token refresh without sending a
+model request or requiring `claude.exe` on Rainmeter's PATH.
+
+Refreshed tokens are saved only to the existing CLI credentials file, using
+atomic replacement and preserving its permissions and other fields. Widget
+refreshes are serialized, and a valid session updated by the CLI during a
+refresh is reused rather than overwritten. Both HTTP requests time out after
+30 seconds. If the refresh token is missing or revoked, run `claude auth login`.
+Rate limiting (HTTP 429) is reported with `Retry-After` when provided, without
+an immediate retry loop. Persistent refresh rate limits may also require
+`claude auth login`.
 
 ```powershell
 .\GetClaudeUsage.ps1

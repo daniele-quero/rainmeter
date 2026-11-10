@@ -69,3 +69,15 @@ refreshing the affected skin.
 3. Refresh or activate the exact skin and check Rainmeter's persisted config.
 4. Confirm the widget's account-specific API request does not change the
    user's active GitHub account.
+
+## Learnings
+
+- Prepare the staging file and its credential-file ACL before an OAuth refresh
+  request. Refresh tokens rotate, so a successful refresh followed by a failed
+  save can invalidate the saved session; atomically persist both returned tokens
+  while preserving CLI metadata. See [the Claude usage documentation](AIDayProgress/README.md#claude).
+- Do not rely on `Get-Acl` / `Set-Acl` autoloading through an inherited
+  `PSModulePath`: Windows PowerShell 5.1 can select incompatible PowerShell 7
+  security modules. The Claude helper uses runtime-native .NET ACL APIs instead
+  (`File.SetAccessControl` on Desktop, `FileSystemAclExtensions.SetAccessControl`
+  on Core); validate both runtimes.
