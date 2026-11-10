@@ -81,3 +81,12 @@ refreshing the affected skin.
   security modules. The Claude helper uses runtime-native .NET ACL APIs instead
   (`File.SetAccessControl` on Desktop, `FileSystemAclExtensions.SetAccessControl`
   on Core); validate both runtimes.
+
+## GitHub pull requests
+
+- For changes intended for the default branch, work on a topic branch, push that
+  branch, and open a pull request targeting the repository's current default
+  branch. Check the default branch rather than assuming it is named `main`.
+- Do not commit directly to or merge into the default branch when the task is to
+  open a pull request. Leave the pull request unmerged unless the user explicitly
+  asks to merge it.
